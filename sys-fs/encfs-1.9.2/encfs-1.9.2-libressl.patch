@@ -1,0 +1,14 @@
+diff -Naur encfs-1.9.2.orig/encfs/SSL_Compat.h encfs-1.9.2/encfs/SSL_Compat.h
+--- encfs-1.9.2.orig/encfs/SSL_Compat.h	2017-07-30 11:03:53.349442287 +0200
++++ encfs-1.9.2/encfs/SSL_Compat.h	2017-07-30 11:06:06.585435149 +0200
+@@ -21,8 +21,8 @@
+ #ifndef _SSL_Compat_incl_
+ #define _SSL_Compat_incl_
+ 
+-// OpenSSL < 1.1.0
+-#if OPENSSL_VERSION_NUMBER < 0x10100000L
++// OpenSSL < 1.1.0 or LibreSSL
++#if defined(LIBRESSL_VERSION_NUMBER) || (OPENSSL_VERSION_NUMBER < 0x10100000L)
+ 
+ // Equivalent methods
+ #define EVP_MD_CTX_new EVP_MD_CTX_create

@@ -1,0 +1,22 @@
+--- courier-0.75.0.ebuild.orig	2017-01-24 09:49:18.759993698 +0100
++++ courier-0.75.0.ebuild	2017-01-24 09:50:50.389993621 +0100
+@@ -3,7 +3,7 @@
+ # $Id$
+ 
+ EAPI=5
+-inherit eutils flag-o-matic multilib
++inherit eutils flag-o-matic multilib systemd
+ 
+ DESCRIPTION="An MTA designed specifically for maildirs"
+ SRC_URI="mirror://sourceforge/courier/${P}.tar.bz2"
+@@ -159,6 +159,10 @@
+ 
+ 	newinitd "${FILESDIR}/courier-init-r4" "courier"
+ 	use fam || sed -i -e's|^.*use famd$||g' "${D}/etc/init.d/courier"
++	
++	exeinto /usr/share/courier
++	doexe "${S}/courier.sysvinit"
++	systemd_dounit "${S}/courier.service"
+ 
+ 	cd "${D}/etc/courier"
+ 	if use webmail ; then

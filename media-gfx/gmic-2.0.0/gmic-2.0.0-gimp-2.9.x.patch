@@ -1,0 +1,145 @@
+diff -Naur gmic-2.0.0.orig/src/gmic_gimp_gtk.cpp gmic-2.0.0/src/gmic_gimp_gtk.cpp
+--- gmic-2.0.0.orig/src/gmic_gimp_gtk.cpp	2017-06-08 12:24:11.430033986 +0200
++++ gmic-2.0.0/src/gmic_gimp_gtk.cpp	2017-06-08 13:58:01.253135549 +0200
+@@ -387,13 +387,13 @@
+ 
+ // Get layer blending mode from string.
+ //-------------------------------------
+-#if (GIMP_MAJOR_VERSION>=3 || GIMP_MINOR_VERSION>8) && !defined(GIMP_NORMAL_MODE)
++#if (GIMP_MAJOR_VERSION>=3 || GIMP_MINOR_VERSION>9) && !defined(GIMP_NORMAL_MODE)
+ typedef GimpLayerMode GimpLayerModeEffects;
+ #define GIMP_NORMAL_MODE GIMP_LAYER_MODE_NORMAL
+ #endif
+ 
+ const char *s_blendmode(const GimpLayerModeEffects &blendmode) {
+-#if GIMP_MAJOR_VERSION<=2 && GIMP_MINOR_VERSION<=8
++#if GIMP_MAJOR_VERSION<=2 && GIMP_MINOR_VERSION<=9
+   switch (blendmode) {
+   case GIMP_NORMAL_MODE : return "alpha";
+   case GIMP_DISSOLVE_MODE : return "dissolve";
+@@ -480,7 +480,7 @@
+   const char *S = std::strstr(s,"mode(");
+   bool is_blendmode = false;
+ 
+-#if GIMP_MAJOR_VERSION<=2 && GIMP_MINOR_VERSION<=8
++#if GIMP_MAJOR_VERSION<=2 && GIMP_MINOR_VERSION<=9
+   _get_output_layer_blendmode("alpha",GIMP_NORMAL_MODE);
+   _get_output_layer_blendmode("normal",GIMP_NORMAL_MODE);
+   _get_output_layer_blendmode("dissolve",GIMP_DISSOLVE_MODE);
+@@ -1798,7 +1798,7 @@
+ // (Much thanks to Andrea Ferrero for his contribution on this).
+ template<typename T>
+ CImg<T>& apply_icc(CImg<T>& img) {
+-#if GIMP_MAJOR_VERSION<=2 && GIMP_MINOR_VERSION<=8
++#if GIMP_MAJOR_VERSION<=2 && GIMP_MINOR_VERSION<=9
+   cimg::unused(img);
+ #else
+   if (!img || img.spectrum()<3 || img.spectrum()>4 || !img_profile) return img;
+@@ -1820,7 +1820,7 @@
+ // Color-correct preview image.
+ //-----------------------------
+ void preview_with_icc() {
+-#if GIMP_MAJOR_VERSION>=3 || GIMP_MINOR_VERSION>8
++#if GIMP_MAJOR_VERSION>=3 || GIMP_MINOR_VERSION>9
+   img_profile = gimp_image_get_effective_color_profile(image_id);
+   GimpColorConfig *const color_config = gimp_get_color_configuration();
+   if (!img_profile || !color_config) return;
+@@ -2015,7 +2015,7 @@
+     if (!gimp_drawable_mask_intersect(input_layers[l],&rgn_x,&rgn_y,&rgn_width,&rgn_height)) continue;
+     const int spectrum = (gimp_drawable_is_rgb(input_layers[l])?3:1) +
+       (gimp_drawable_has_alpha(input_layers[l])?1:0);
+-#if GIMP_MAJOR_VERSION<=2 && GIMP_MINOR_VERSION<=8
++#if GIMP_MAJOR_VERSION<=2 && GIMP_MINOR_VERSION<=9
+     GimpDrawable *drawable = gimp_drawable_get(input_layers[l]);
+     GimpPixelRgn region;
+     gimp_pixel_rgn_init(&region,drawable,rgn_x,rgn_y,rgn_width,rgn_height,false,false);
+@@ -2091,7 +2091,7 @@
+         const float
+           pw = (float)gimp_preview_width,
+           ph = (float)gimp_preview_height;
+-#if GIMP_MAJOR_VERSION<=2 && GIMP_MINOR_VERSION<=8
++#if GIMP_MAJOR_VERSION<=2 && GIMP_MINOR_VERSION<=9
+         const float
+           dw = (float)gimp_zoom_preview_get_drawable(GIMP_ZOOM_PREVIEW(gui_preview))->width,
+           dh = (float)gimp_zoom_preview_get_drawable(GIMP_ZOOM_PREVIEW(gui_preview))->height;
+@@ -2229,7 +2229,7 @@
+ 
+   computed_preview.assign();
+ 
+-#if GIMP_MAJOR_VERSION<=2 && GIMP_MINOR_VERSION<=8
++#if GIMP_MAJOR_VERSION<=2 && GIMP_MINOR_VERSION<=9
+   const bool is_valid_preview_drawable = gui_preview && GIMP_IS_PREVIEW(gui_preview) &&
+     _gimp_item_is_valid(gimp_zoom_preview_get_drawable(GIMP_ZOOM_PREVIEW(gui_preview))->drawable_id);
+ #else
+@@ -2262,7 +2262,7 @@
+       gimp_context_set_interpolation(mode);
+     }
+ 
+-#if GIMP_MAJOR_VERSION<=2 && GIMP_MINOR_VERSION<=8
++#if GIMP_MAJOR_VERSION<=2 && GIMP_MINOR_VERSION<=9
+     GimpDrawable *const preview_drawable =
+       gimp_drawable_get(gimp_image_get_active_drawable(preview_image_id?preview_image_id:image_id));
+     gui_preview = gimp_zoom_preview_new(preview_drawable);
+@@ -3056,7 +3056,7 @@
+           calibrate_image(img,layer_dimensions(p,3),false);
+           if (gimp_drawable_mask_intersect(layers[p],&rgn_x,&rgn_y,&rgn_width,&rgn_height)) {
+ 
+-#if GIMP_MAJOR_VERSION<=2 && GIMP_MINOR_VERSION<=8
++#if GIMP_MAJOR_VERSION<=2 && GIMP_MINOR_VERSION<=9
+             GimpDrawable *drawable = gimp_drawable_get(layers[p]);
+             GimpPixelRgn region;
+             gimp_pixel_rgn_init(&region,drawable,rgn_x,rgn_y,rgn_width,rgn_height,true,true);
+@@ -3121,7 +3121,7 @@
+             else if (layer_name) gimp_item_set_name(layer_id,layer_name);
+             gimp_image_insert_layer(image_id,layer_id,-1,layer_pos + p);
+ 
+-#if GIMP_MAJOR_VERSION<=2 && GIMP_MINOR_VERSION<=8
++#if GIMP_MAJOR_VERSION<=2 && GIMP_MINOR_VERSION<=9
+             GimpDrawable *drawable = gimp_drawable_get(layer_id);
+             GimpPixelRgn region;
+             gimp_pixel_rgn_init(&region,drawable,0,0,drawable->width,drawable->height,true,true);
+@@ -3186,7 +3186,7 @@
+           else if (layer_name) gimp_item_set_name(layer_id,layer_name);
+           gimp_image_insert_layer(image_id,layer_id,-1,p);
+ 
+-#if GIMP_MAJOR_VERSION<=2 && GIMP_MINOR_VERSION<=8
++#if GIMP_MAJOR_VERSION<=2 && GIMP_MINOR_VERSION<=9
+           GimpDrawable *drawable = gimp_drawable_get(layer_id);
+           GimpPixelRgn region;
+           gimp_pixel_rgn_init(&region,drawable,0,0,drawable->width,drawable->height,true,true);
+@@ -3226,7 +3226,7 @@
+       if (spt.images.size()) {
+         const gint active_layer_id = gimp_image_get_active_layer(image_id);
+         if (active_layer_id>=0) {
+-#if GIMP_MAJOR_VERSION<=2 && GIMP_MINOR_VERSION<=8
++#if GIMP_MAJOR_VERSION<=2 && GIMP_MINOR_VERSION<=9
+           const int nimage_id = gimp_image_new(max_width,max_height,max_spectrum<=2?GIMP_GRAY:GIMP_RGB);
+ #else
+           const int nimage_id = gimp_image_new_with_precision(max_width,max_height,max_spectrum<=2?GIMP_GRAY:GIMP_RGB,
+@@ -3256,7 +3256,7 @@
+             else if (layer_name) gimp_item_set_name(layer_id,layer_name);
+             gimp_image_insert_layer(nimage_id,layer_id,-1,p);
+ 
+-#if GIMP_MAJOR_VERSION<=2 && GIMP_MINOR_VERSION<=8
++#if GIMP_MAJOR_VERSION<=2 && GIMP_MINOR_VERSION<=9
+             GimpDrawable *drawable = gimp_drawable_get(layer_id);
+             GimpPixelRgn region;
+             gimp_pixel_rgn_init(&region,drawable,0,0,drawable->width,drawable->height,true,true);
+@@ -3590,7 +3590,7 @@
+     const float
+       pw = (float)gimp_preview_width,
+       ph = (float)gimp_preview_height;
+-#if GIMP_MAJOR_VERSION<=2 && GIMP_MINOR_VERSION<=8
++#if GIMP_MAJOR_VERSION<=2 && GIMP_MINOR_VERSION<=9
+     const float
+       dw = (float)gimp_zoom_preview_get_drawable(GIMP_ZOOM_PREVIEW(gui_preview))->width,
+       dh = (float)gimp_zoom_preview_get_drawable(GIMP_ZOOM_PREVIEW(gui_preview))->height;
+@@ -4512,7 +4512,7 @@
+ 
+   try {
+     image_id = param[1].data.d_drawable;
+-#if GIMP_MAJOR_VERSION<=2 && GIMP_MINOR_VERSION<=8
++#if GIMP_MAJOR_VERSION<=2 && GIMP_MINOR_VERSION<=9
+     gimp_tile_cache_ntiles(2*(gimp_image_width(image_id)/gimp_tile_width() + 1));
+ #endif
+ 

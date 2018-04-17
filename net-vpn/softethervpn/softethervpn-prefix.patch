@@ -1,0 +1,56 @@
+diff -Naru SoftEtherVPN_Stable-4.25-9656-rtm.orig/src/makefiles/linux_32bit.mak SoftEtherVPN_Stable-4.25-9656-rtm/src/makefiles/linux_32bit.mak
+--- SoftEtherVPN_Stable-4.25-9656-rtm.orig/src/makefiles/linux_32bit.mak	2018-01-31 13:35:49.089798061 +0100
++++ SoftEtherVPN_Stable-4.25-9656-rtm/src/makefiles/linux_32bit.mak	2018-01-31 13:37:10.039797302 +0100
+@@ -33,11 +33,11 @@
+ 
+ OPTIONS_LINK_RELEASE=-O2 -fsigned-char -lm -ldl -lrt -lpthread -lssl -lcrypto -lreadline -lncurses -lz
+ 
+-INSTALL_BINDIR=/usr/bin/
+-INSTALL_VPNSERVER_DIR=/usr/vpnserver/
+-INSTALL_VPNBRIDGE_DIR=/usr/vpnbridge/
+-INSTALL_VPNCLIENT_DIR=/usr/vpnclient/
+-INSTALL_VPNCMD_DIR=/usr/vpncmd/
++INSTALL_BINDIR=$(PREFIX)usr/bin/
++INSTALL_VPNSERVER_DIR=$(PREFIX)usr/vpnserver/
++INSTALL_VPNBRIDGE_DIR=$(PREFIX)usr/vpnbridge/
++INSTALL_VPNCLIENT_DIR=$(PREFIX)usr/vpnclient/
++INSTALL_VPNCMD_DIR=$(PREFIX)usr/vpncmd/
+ 
+ ifeq ($(DEBUG),YES)
+ 	OPTIONS_COMPILE=$(OPTIONS_COMPILE_DEBUG)
+@@ -402,6 +402,7 @@
+ 
+ $(INSTALL_BINDIR)vpnbridge: bin/vpnbridge/hamcore.se2 bin/vpnbridge/vpnbridge
+ 	@mkdir -p $(INSTALL_VPNBRIDGE_DIR)
++	@mkdir -p $(INSTALL_BINDIR)
+ 	cp bin/vpnbridge/hamcore.se2 $(INSTALL_VPNBRIDGE_DIR)hamcore.se2
+ 	cp bin/vpnbridge/vpnbridge $(INSTALL_VPNBRIDGE_DIR)vpnbridge
+ 	echo "#!/bin/sh" > $(INSTALL_BINDIR)vpnbridge
+diff -Naru SoftEtherVPN_Stable-4.25-9656-rtm.orig/src/makefiles/linux_64bit.mak SoftEtherVPN_Stable-4.25-9656-rtm/src/makefiles/linux_64bit.mak
+--- SoftEtherVPN_Stable-4.25-9656-rtm.orig/src/makefiles/linux_64bit.mak	2018-01-31 13:35:49.089798061 +0100
++++ SoftEtherVPN_Stable-4.25-9656-rtm/src/makefiles/linux_64bit.mak	2018-01-31 13:36:45.139797536 +0100
+@@ -33,11 +33,11 @@
+ 
+ OPTIONS_LINK_RELEASE=-O2 -fsigned-char -m64 -lm -ldl -lrt -lpthread -lssl -lcrypto -lreadline -lncurses -lz
+ 
+-INSTALL_BINDIR=/usr/bin/
+-INSTALL_VPNSERVER_DIR=/usr/vpnserver/
+-INSTALL_VPNBRIDGE_DIR=/usr/vpnbridge/
+-INSTALL_VPNCLIENT_DIR=/usr/vpnclient/
+-INSTALL_VPNCMD_DIR=/usr/vpncmd/
++INSTALL_BINDIR=$(PREFIX)usr/bin/
++INSTALL_VPNSERVER_DIR=$(PREFIX)usr/vpnserver/
++INSTALL_VPNBRIDGE_DIR=$(PREFIX)usr/vpnbridge/
++INSTALL_VPNCLIENT_DIR=$(PREFIX)usr/vpnclient/
++INSTALL_VPNCMD_DIR=$(PREFIX)usr/vpncmd/
+ 
+ ifeq ($(DEBUG),YES)
+ 	OPTIONS_COMPILE=$(OPTIONS_COMPILE_DEBUG)
+@@ -402,6 +402,7 @@
+ 
+ $(INSTALL_BINDIR)vpnbridge: bin/vpnbridge/hamcore.se2 bin/vpnbridge/vpnbridge
+ 	@mkdir -p $(INSTALL_VPNBRIDGE_DIR)
++	@mkdir -p $(INSTALL_BINDIR)
+ 	cp bin/vpnbridge/hamcore.se2 $(INSTALL_VPNBRIDGE_DIR)hamcore.se2
+ 	cp bin/vpnbridge/vpnbridge $(INSTALL_VPNBRIDGE_DIR)vpnbridge
+ 	echo "#!/bin/sh" > $(INSTALL_BINDIR)vpnbridge

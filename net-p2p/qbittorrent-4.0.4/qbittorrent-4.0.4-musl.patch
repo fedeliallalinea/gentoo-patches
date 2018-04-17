@@ -1,0 +1,14 @@
+diff -Naru qbittorrent-4.0.4.orig/src/app/main.cpp qbittorrent-4.0.4/src/app/main.cpp
+--- qbittorrent-4.0.4.orig/src/app/main.cpp	2018-03-16 10:08:10.493478535 +0100
++++ qbittorrent-4.0.4/src/app/main.cpp	2018-03-16 10:12:21.919464628 +0100
+@@ -57,8 +57,10 @@
+ 
+ #ifdef Q_OS_UNIX
+ #include <signal.h>
++#ifdef __GLIBC__
+ #include <execinfo.h>
+ #include "stacktrace.h"
++#endif // __GLIBC__
+ #endif // Q_OS_UNIX
+ 
+ #ifdef STACKTRACE_WIN

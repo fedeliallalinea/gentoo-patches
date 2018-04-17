@@ -1,0 +1,22 @@
+--- courier-authlib-0.66.4.ebuild.orig	2017-01-24 08:04:00.479998989 +0100
++++ courier-authlib-0.66.4.ebuild	2017-01-24 08:31:29.289997608 +0100
+@@ -3,7 +3,7 @@
+ # $Id$
+ 
+ EAPI=5
+-inherit eutils flag-o-matic multilib user
++inherit eutils flag-o-matic multilib user systemd
+ 
+ KEYWORDS="alpha amd64 ~arm hppa ia64 ~mips ppc ppc64 ~s390 ~sh sparc x86 ~amd64-fbsd ~x86-fbsd"
+ 
+@@ -135,6 +135,10 @@
+ 	fi
+ 	newinitd "${FILESDIR}/${PN}-r1" "${PN}"
+ 
++	exeinto /usr/share/courier
++	doexe "${S}/courier-authlib.sysvinit"
++	systemd_dounit "${S}/courier-authlib.service"
++
+ 	use static-libs || find "${D}" -name "*.a" -delete
+ }
+ 

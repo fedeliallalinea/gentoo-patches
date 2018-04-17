@@ -1,0 +1,11 @@
+diff -Naur libffado-9999.orig/src/bebob/bebob_dl_mgr.cpp libffado-9999/src/bebob/bebob_dl_mgr.cpp
+--- libffado-9999.orig/src/bebob/bebob_dl_mgr.cpp	2017-06-22 08:01:05.569976242 +0200
++++ libffado-9999/src/bebob/bebob_dl_mgr.cpp	2017-06-22 08:01:46.939975838 +0200
+@@ -32,6 +32,7 @@
+ #include "libutil/Time.h"
+ 
+ #include "libutil/ByteSwap.h"
++#include "ffadodevice.h"   // Needed for ffado_smartptr
+ 
+ #include <cstdio>
+ #include <cstring>

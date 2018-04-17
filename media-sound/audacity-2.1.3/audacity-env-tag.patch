@@ -1,0 +1,21 @@
+diff -Naur audacity-minsrc-2.1.3.orig/lib-src/FileDialog/Makefile.in audacity-minsrc-2.1.3/lib-src/FileDialog/Makefile.in
+--- audacity-minsrc-2.1.3.orig/lib-src/FileDialog/Makefile.in	2017-09-12 18:54:07.968873002 +0200
++++ audacity-minsrc-2.1.3/lib-src/FileDialog/Makefile.in	2017-09-12 18:55:14.002869350 +0200
+@@ -203,7 +203,7 @@
+ am__v_CXXLD_1 = 
+ OBJCXXCOMPILE = $(OBJCXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
+ 	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_OBJCXXFLAGS) $(OBJCXXFLAGS)
+-LTOBJCXXCOMPILE = $(LIBTOOL) $(AM_V_lt) $(AM_LIBTOOLFLAGS) \
++LTOBJCXXCOMPILE = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
+ 	$(LIBTOOLFLAGS) --mode=compile $(OBJCXX) $(DEFS) \
+ 	$(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) \
+ 	$(AM_OBJCXXFLAGS) $(OBJCXXFLAGS)
+@@ -212,7 +212,7 @@
+ am__v_OBJCXX_0 = @echo "  OBJCXX  " $@;
+ am__v_OBJCXX_1 = 
+ OBJCXXLD = $(OBJCXX)
+-OBJCXXLINK = $(LIBTOOL) $(AM_V_lt) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
++OBJCXXLINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
+ 	--mode=link $(OBJCXXLD) $(AM_OBJCXXFLAGS) $(OBJCXXFLAGS) \
+ 	$(AM_LDFLAGS) $(LDFLAGS) -o $@
+ AM_V_OBJCXXLD = $(am__v_OBJCXXLD_@AM_V@)

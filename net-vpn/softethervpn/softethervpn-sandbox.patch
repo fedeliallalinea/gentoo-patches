@@ -1,0 +1,24 @@
+diff -Naru SoftEtherVPN_Stable-4.25-9656-rtm.orig/src/Mayaqua/Unix.c SoftEtherVPN_Stable-4.25-9656-rtm/src/Mayaqua/Unix.c
+--- SoftEtherVPN_Stable-4.25-9656-rtm.orig/src/Mayaqua/Unix.c	2018-01-30 07:36:45.850004792 +0100
++++ SoftEtherVPN_Stable-4.25-9656-rtm/src/Mayaqua/Unix.c	2018-01-30 07:37:46.460004946 +0100
+@@ -2288,20 +2288,6 @@
+ 	UnixSetResourceLimit(RLIMIT_NPROC, UNIX_MAX_CHILD_PROCESSES);
+ #endif	// RLIMIT_NPROC
+ 
+-	// Write a value to the threads-max of the proc file system
+-	o = UnixFileCreate("/proc/sys/kernel/threads-max");
+-	if (o != NULL)
+-	{
+-		char tmp[128];
+-		sprintf(tmp, "%u\n", UNIX_LINUX_MAX_THREADS);
+-		UnixFileWrite(o, tmp, strlen(tmp));
+-		UnixFileClose(o, false);
+-	}
+-
+-	// Set the signals that is to be ignored
+-	signal(SIGPIPE, SIG_IGN);
+-	signal(SIGALRM, SIG_IGN);
+-
+ #ifdef	UNIX_BSD
+ 	signal(64, SIG_IGN);
+ #endif	// UNIX_BSD

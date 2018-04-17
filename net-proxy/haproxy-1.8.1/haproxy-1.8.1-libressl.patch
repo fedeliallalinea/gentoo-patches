@@ -1,0 +1,146 @@
+diff -Naru haproxy-1.8.1.orig/src/ssl_sock.c haproxy-1.8.1/src/ssl_sock.c
+--- haproxy-1.8.1.orig/src/ssl_sock.c	2018-01-03 15:15:41.360069598 +0100
++++ haproxy-1.8.1/src/ssl_sock.c	2018-01-03 15:29:29.340071705 +0100
+@@ -57,7 +57,7 @@
+ #include <openssl/engine.h>
+ #endif
+ 
+-#if (OPENSSL_VERSION_NUMBER >= 0x1010000fL) && !defined(OPENSSL_NO_ASYNC)
++#if (OPENSSL_VERSION_NUMBER >= 0x1010000fL && !defined LIBRESSL_VERSION_NUMBER) && !defined(OPENSSL_NO_ASYNC)
+ #include <openssl/async.h>
+ #endif
+ 
+@@ -426,7 +426,7 @@
+ }
+ #endif
+ 
+-#if (OPENSSL_VERSION_NUMBER >= 0x1010000fL) && !defined(OPENSSL_NO_ASYNC)
++#if (OPENSSL_VERSION_NUMBER >= 0x1010000fL && !defined LIBRESSL_VERSION_NUMBER) && !defined(OPENSSL_NO_ASYNC)
+ /*
+  * openssl async fd handler
+  */
+@@ -1108,8 +1108,11 @@
+ 		ocsp = NULL;
+ 
+ #ifndef SSL_CTX_get_tlsext_status_cb
+-# define SSL_CTX_get_tlsext_status_cb(ctx, cb) \
+-	*cb = (void (*) (void))ctx->tlsext_status_cb;
++#ifndef SSL_CTRL_GET_TLSEXT_STATUS_REQ_CB
++#define SSL_CTRL_GET_TLSEXT_STATUS_REQ_CB 128
++#endif
++#define SSL_CTX_get_tlsext_status_cb(ctx, cb) \
++       *cb = SSL_CTX_ctrl(ctx,SSL_CTRL_GET_TLSEXT_STATUS_REQ_CB,0, (void (**)(void))cb)
+ #endif
+ 	SSL_CTX_get_tlsext_status_cb(ctx, &callback);
+ 
+@@ -1137,7 +1140,10 @@
+ 		int key_type;
+ 		EVP_PKEY *pkey;
+ 
+-#ifdef SSL_CTX_get_tlsext_status_arg
++#if defined(SSL_CTX_get_tlsext_status_arg) || defined(LIBRESSL_VERSION_NUMBER)
++#ifndef SSL_CTRL_GET_TLSEXT_STATUS_REQ_CB_ARG
++#define SSL_CTRL_GET_TLSEXT_STATUS_REQ_CB_ARG 129
++#endif
+ 		SSL_CTX_ctrl(ctx, SSL_CTRL_GET_TLSEXT_STATUS_REQ_CB_ARG, 0, &cb_arg);
+ #else
+ 		cb_arg = ctx->tlsext_status_arg;
+@@ -3768,7 +3774,7 @@
+ 		options &= ~SSL_OP_CIPHER_SERVER_PREFERENCE;
+ 	SSL_CTX_set_options(ctx, options);
+ 
+-#if (OPENSSL_VERSION_NUMBER >= 0x1010000fL) && !defined(OPENSSL_NO_ASYNC)
++#if (OPENSSL_VERSION_NUMBER >= 0x1010000fL && !defined LIBRESSL_VERSION_NUMBER) && !defined(OPENSSL_NO_ASYNC)
+ 	if (global_ssl.async)
+ 		mode |= SSL_MODE_ASYNC;
+ #endif
+@@ -4533,7 +4539,7 @@
+ 		options |= SSL_OP_NO_TICKET;
+ 	SSL_CTX_set_options(ctx, options);
+ 
+-#if (OPENSSL_VERSION_NUMBER >= 0x1010000fL) && !defined(OPENSSL_NO_ASYNC)
++#if (OPENSSL_VERSION_NUMBER >= 0x1010000fL && !defined LIBRESSL_VERSION_NUMBER) && !defined(OPENSSL_NO_ASYNC)
+ 	if (global_ssl.async)
+ 		mode |= SSL_MODE_ASYNC;
+ #endif
+@@ -5087,7 +5093,7 @@
+ 				fd_cant_recv(conn->handle.fd);
+ 				return 0;
+ 			}
+-#if (OPENSSL_VERSION_NUMBER >= 0x1010000fL) && !defined(OPENSSL_NO_ASYNC)
++#if (OPENSSL_VERSION_NUMBER >= 0x1010000fL && !defined LIBRESSL_VERSION_NUMBER) && !defined(OPENSSL_NO_ASYNC)
+ 			else if (ret == SSL_ERROR_WANT_ASYNC) {
+ 				ssl_async_process_fds(conn, conn->xprt_ctx);
+ 				return 0;
+@@ -5106,7 +5112,7 @@
+ 					OSSL_HANDSHAKE_STATE state = SSL_get_state((SSL *)conn->xprt_ctx);
+ 					empty_handshake = state == TLS_ST_BEFORE;
+ #else
+-					empty_handshake = !((SSL *)conn->xprt_ctx)->packet_length;
++					empty_handshake = SSL_state((SSL *)conn->xprt_ctx) == SSL_ST_BEFORE;
+ #endif
+ 					if (empty_handshake) {
+ 						if (!errno) {
+@@ -5171,7 +5177,7 @@
+ 			fd_cant_recv(conn->handle.fd);
+ 			return 0;
+ 		}
+-#if (OPENSSL_VERSION_NUMBER >= 0x1010000fL) && !defined(OPENSSL_NO_ASYNC)
++#if (OPENSSL_VERSION_NUMBER >= 0x1010000fL && !defined LIBRESSL_VERSION_NUMBER) && !defined(OPENSSL_NO_ASYNC)
+ 		else if (ret == SSL_ERROR_WANT_ASYNC) {
+ 			ssl_async_process_fds(conn, conn->xprt_ctx);
+ 			return 0;
+@@ -5190,7 +5196,7 @@
+ 				OSSL_HANDSHAKE_STATE state = SSL_get_state((SSL *)conn->xprt_ctx);
+ 				empty_handshake = state == TLS_ST_BEFORE;
+ #else
+-				empty_handshake = !((SSL *)conn->xprt_ctx)->packet_length;
++				empty_handshake = SSL_state((SSL *)conn->xprt_ctx) == SSL_ST_BEFORE;
+ #endif
+ 				if (empty_handshake) {
+ 					if (!errno) {
+@@ -5249,7 +5255,7 @@
+ 
+ reneg_ok:
+ 
+-#if (OPENSSL_VERSION_NUMBER >= 0x1010000fL) && !defined(OPENSSL_NO_ASYNC)
++#if (OPENSSL_VERSION_NUMBER >= 0x1010000fL && !defined LIBRESSL_VERSION_NUMBER) && !defined(OPENSSL_NO_ASYNC)
+ 	/* ASYNC engine API doesn't support moving read/write
+ 	 * buffers. So we disable ASYNC mode right after
+ 	 * the handshake to avoid buffer oveflows.
+@@ -5405,7 +5411,7 @@
+ 				/* handshake is running, and it needs to enable write */
+ 				conn->flags |= CO_FL_SSL_WAIT_HS;
+ 				__conn_sock_want_send(conn);
+-#if (OPENSSL_VERSION_NUMBER >= 0x1010000fL) && !defined(OPENSSL_NO_ASYNC)
++#if (OPENSSL_VERSION_NUMBER >= 0x1010000fL && !defined LIBRESSL_VERSION_NUMBER) && !defined(OPENSSL_NO_ASYNC)
+ 				/* Async mode can be re-enabled, because we're leaving data state.*/
+ 				if (global_ssl.async)
+ 					SSL_set_mode(conn->xprt_ctx, SSL_MODE_ASYNC);
+@@ -5417,7 +5423,7 @@
+ 					/* handshake is running, and it may need to re-enable read */
+ 					conn->flags |= CO_FL_SSL_WAIT_HS;
+ 					__conn_sock_want_recv(conn);
+-#if (OPENSSL_VERSION_NUMBER >= 0x1010000fL) && !defined(OPENSSL_NO_ASYNC)
++#if (OPENSSL_VERSION_NUMBER >= 0x1010000fL && !defined LIBRESSL_VERSION_NUMBER) && !defined(OPENSSL_NO_ASYNC)
+ 					/* Async mode can be re-enabled, because we're leaving data state.*/
+ 					if (global_ssl.async)
+ 						SSL_set_mode(conn->xprt_ctx, SSL_MODE_ASYNC);
+@@ -5558,7 +5564,7 @@
+ 					/* handshake is running, and it may need to re-enable write */
+ 					conn->flags |= CO_FL_SSL_WAIT_HS;
+ 					__conn_sock_want_send(conn);
+-#if (OPENSSL_VERSION_NUMBER >= 0x1010000fL) && !defined(OPENSSL_NO_ASYNC)
++#if (OPENSSL_VERSION_NUMBER >= 0x1010000fL && !defined LIBRESSL_VERSION_NUMBER) && !defined(OPENSSL_NO_ASYNC)
+ 					/* Async mode can be re-enabled, because we're leaving data state.*/
+ 					if (global_ssl.async)
+ 						SSL_set_mode(conn->xprt_ctx, SSL_MODE_ASYNC);
+@@ -5573,7 +5579,7 @@
+ 				/* handshake is running, and it needs to enable read */
+ 				conn->flags |= CO_FL_SSL_WAIT_HS;
+ 				__conn_sock_want_recv(conn);
+-#if (OPENSSL_VERSION_NUMBER >= 0x1010000fL) && !defined(OPENSSL_NO_ASYNC)
++#if (OPENSSL_VERSION_NUMBER >= 0x1010000fL && !defined LIBRESSL_VERSION_NUMBER) && !defined(OPENSSL_NO_ASYNC)
+ 				/* Async mode can be re-enabled, because we're leaving data state.*/
+ 				if (global_ssl.async)
+ 					SSL_set_mode(conn->xprt_ctx, SSL_MODE_ASYNC);

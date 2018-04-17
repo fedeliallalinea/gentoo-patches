@@ -1,0 +1,24 @@
+diff -Naru evolution-3.24.5.orig/evolution-3.24.5/src/e-util/e-spell-dictionary.c evolution-3.24.5/evolution-3.24.5/src/e-util/e-spell-dictionary.c
+--- evolution-3.24.5.orig/evolution-3.24.5/src/e-util/e-spell-dictionary.c	2017-10-20 15:40:51.190412477 +0200
++++ evolution-3.24.5/evolution-3.24.5/src/e-util/e-spell-dictionary.c	2017-10-20 15:41:55.420413380 +0200
+@@ -751,7 +751,7 @@
+ 	suggestions = enchant_dict_suggest (enchant_dict, word, length, &count);
+ 	for (ii = 0; ii < count; ii++)
+ 		list = g_list_prepend (list, g_strdup (suggestions[ii]));
+-	enchant_dict_free_suggestions (enchant_dict, suggestions);
++	enchant_dict_free_string_list (enchant_dict, suggestions);
+ 
+ 	g_object_unref (spell_checker);
+ 
+diff -Naru evolution-3.24.5.orig/src/e-util/e-spell-dictionary.c evolution-3.24.5/src/e-util/e-spell-dictionary.c
+--- evolution-3.24.5.orig/src/e-util/e-spell-dictionary.c	2017-10-20 15:40:51.170412477 +0200
++++ evolution-3.24.5/src/e-util/e-spell-dictionary.c	2017-10-20 15:42:10.580413594 +0200
+@@ -751,7 +751,7 @@
+ 	suggestions = enchant_dict_suggest (enchant_dict, word, length, &count);
+ 	for (ii = 0; ii < count; ii++)
+ 		list = g_list_prepend (list, g_strdup (suggestions[ii]));
+-	enchant_dict_free_suggestions (enchant_dict, suggestions);
++	enchant_dict_free_string_list (enchant_dict, suggestions);
+ 
+ 	g_object_unref (spell_checker);
+ 

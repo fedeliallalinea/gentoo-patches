@@ -1,0 +1,16 @@
+diff -Naur gentoo-bashcomp-20140911.orig/completions/emerge gentoo-bashcomp-20140911/completions/emerge
+--- gentoo-bashcomp-20140911.orig/completions/emerge	2017-07-31 12:08:49.600078267 +0200
++++ gentoo-bashcomp-20140911/completions/emerge	2017-07-31 12:09:22.110078420 +0200
+@@ -26,6 +26,12 @@
+         return 0
+     fi
+ 
++    if [[ ${cur} =~ ^@ ]] ; then
++        local SET_LIST=($(emerge --list-sets | xargs))
++        COMPREPLY=( $( compgen -W '${SET_LIST[@]/#/@}' $cur ) )
++        return 0
++    fi
++
+     # find action
+     for x in ${COMP_LINE} ; do
+         if [[ ${x} =~ ^(system|world)$ ]] || [[ ${x} =~ -[CPcs] ]] || \
