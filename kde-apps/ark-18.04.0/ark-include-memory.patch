@@ -1,0 +1,11 @@
+diff -Naru ark-18.04.0.orig/plugins/libzipplugin/libzipplugin.cpp ark-18.04.0/plugins/libzipplugin/libzipplugin.cpp
+--- ark-18.04.0.orig/plugins/libzipplugin/libzipplugin.cpp	2018-04-19 19:23:12.725883968 +0200
++++ ark-18.04.0/plugins/libzipplugin/libzipplugin.cpp	2018-04-19 19:23:43.031882291 +0200
+@@ -41,6 +41,7 @@
+ 
+ #include <utime.h>
+ #include <zlib.h>
++#include <memory>
+ 
+ K_PLUGIN_FACTORY_WITH_JSON(LibZipPluginFactory, "kerfuffle_libzip.json", registerPlugin<LibzipPlugin>();)
+ 
