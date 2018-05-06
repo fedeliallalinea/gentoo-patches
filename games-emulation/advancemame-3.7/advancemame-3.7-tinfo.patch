@@ -1,0 +1,54 @@
+diff -Naru advancemame-3.7.orig/advance/cfg.mak advancemame-3.7/advance/cfg.mak
+--- advancemame-3.7.orig/advance/cfg.mak	2018-05-06 10:36:15.914705462 +0200
++++ advancemame-3.7/advance/cfg.mak	2018-05-06 10:38:39.677697510 +0200
+@@ -65,7 +65,7 @@
+ ifeq ($(CONF_LIB_NCURSES),yes)
+ CFGCFLAGS += \
+ 	-DUSE_VIDEO_CURSES
+-CFGLIBS += -lncurses
++CFGLIBS += $(pkg-config --libs ncurses)
+ CFGOBJS += \
+ 	$(CFGOBJ)/linux/vcurses.o
+ endif
+diff -Naru advancemame-3.7.orig/advance/v.mak advancemame-3.7/advance/v.mak
+--- advancemame-3.7.orig/advance/v.mak	2018-05-06 10:36:15.901705463 +0200
++++ advancemame-3.7/advance/v.mak	2018-05-06 10:38:59.679696404 +0200
+@@ -61,7 +61,7 @@
+ ifeq ($(CONF_LIB_NCURSES),yes)
+ VCFLAGS += \
+ 	-DUSE_VIDEO_CURSES
+-VLIBS += -lncurses
++VLIBS += $(pkg-config --libs ncurses)
+ VOBJS += \
+ 	$(VOBJ)/linux/vcurses.o
+ endif
+diff -Naru advancemame-3.7.orig/configure advancemame-3.7/configure
+--- advancemame-3.7.orig/configure	2018-05-06 10:36:15.928705461 +0200
++++ advancemame-3.7/configure	2018-05-06 10:37:55.123699974 +0200
+@@ -8294,7 +8294,7 @@
+   $as_echo_n "(cached) " >&6
+ else
+   ac_check_lib_save_LIBS=$LIBS
+-LIBS="-lncurses
++LIBS="$(pkg-config --libs ncurses)
+ 	 $LIBS"
+ cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+ /* end confdefs.h.  */
+@@ -8338,7 +8338,7 @@
+   $as_echo_n "(cached) " >&6
+ else
+   ac_check_lib_save_LIBS=$LIBS
+-LIBS="-lncurses
++LIBS="$(pkg-config --libs ncurses)
+ 	 $LIBS"
+ cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+ /* end confdefs.h.  */
+@@ -8374,7 +8374,7 @@
+ #define HAVE_LIBNCURSES 1
+ _ACEOF
+ 
+-  LIBS="-lncurses $LIBS"
++  LIBS="$(pkg-config --libs ncurses) $LIBS"
+ 
+ else
+   as_fn_error $? "the sLang library is missing" "$LINENO" 5
