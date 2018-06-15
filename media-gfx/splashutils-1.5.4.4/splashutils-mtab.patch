@@ -1,0 +1,12 @@
+diff -Naru splashutils-1.5.4.4.orig/src/libfbsplash.c splashutils-1.5.4.4/src/libfbsplash.c
+--- splashutils-1.5.4.4.orig/src/libfbsplash.c	2018-06-15 10:30:46.310159090 +0200
++++ splashutils-1.5.4.4/src/libfbsplash.c	2018-06-15 10:31:18.780159547 +0200
+@@ -495,7 +495,7 @@
+ 
+ nosave:
+ 	/* Clear a stale mtab entry that might have been created by the initscripts. */
+-	system("/bin/sed -i -e '\\#"FBSPLASH_CACHEDIR"# d' /etc/mtab");
++	//system("/bin/sed -i -e '\\#"FBSPLASH_CACHEDIR"# d' /etc/mtab");
+ 
+ 	umount2(what, MNT_DETACH);
+ 	return err;
