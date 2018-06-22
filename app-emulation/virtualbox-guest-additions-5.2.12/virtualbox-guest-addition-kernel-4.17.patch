@@ -29,13 +29,11 @@ diff -Naru vboxvideo.orig/vbox_ttm.c vboxvideo/vbox_ttm.c
  		kfree(tt);
  		return NULL;
  	}
-@@ -394,9 +403,13 @@
- 	acc_size = ttm_bo_dma_acc_size(&vbox->ttm.bdev, size,
- 				       sizeof(struct vbox_bo));
+@@ -396,7 +405,11 @@
  
-+#if LINUX_VERSION_CODE < KERNEL_VERSION(4, 17, 0)
  	ret = ttm_bo_init(&vbox->ttm.bdev, &vboxbo->bo, size,
  			  ttm_bo_type_device, &vboxbo->placement,
++#if LINUX_VERSION_CODE < KERNEL_VERSION(4, 17, 0)
  			  align >> PAGE_SHIFT, false, NULL, acc_size,
 +#else
 +                          align >> PAGE_SHIFT, false, acc_size,
