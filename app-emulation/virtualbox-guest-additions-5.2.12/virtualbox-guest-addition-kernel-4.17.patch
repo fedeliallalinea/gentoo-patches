@@ -1,0 +1,45 @@
+diff -Naru vboxvideo.orig/vbox_ttm.c vboxvideo/vbox_ttm.c
+--- a/vboxvideo.orig/vbox_ttm.c	2018-06-22 13:56:45.070112812 +0200
++++ b/vboxvideo/vbox_ttm.c	2018-06-22 14:00:56.320114099 +0200
+@@ -203,10 +203,15 @@
+ 	.destroy = &vbox_ttm_backend_destroy,
+ };
+ 
++#if LINUX_VERSION_CODE < KERNEL_VERSION(4, 17, 0)
+ static struct ttm_tt *vbox_ttm_tt_create(struct ttm_bo_device *bdev,
+ 					 unsigned long size,
+ 					 u32 page_flags,
+ 					 struct page *dummy_read_page)
++#else
++static struct ttm_tt *vbox_ttm_tt_create(struct ttm_buffer_object *bo,
++                                         u32 page_flags)
++#endif
+ {
+ 	struct ttm_tt *tt;
+ 
+@@ -215,7 +220,11 @@
+ 		return NULL;
+ 
+ 	tt->func = &vbox_tt_backend_func;
++#if LINUX_VERSION_CODE < KERNEL_VERSION(4, 17, 0)
+ 	if (ttm_tt_init(tt, bdev, size, page_flags, dummy_read_page)) {
++#else
++        if (ttm_tt_init(tt, bo, page_flags)) {
++#endif
+ 		kfree(tt);
+ 		return NULL;
+ 	}
+@@ -394,9 +403,13 @@
+ 	acc_size = ttm_bo_dma_acc_size(&vbox->ttm.bdev, size,
+ 				       sizeof(struct vbox_bo));
+ 
++#if LINUX_VERSION_CODE < KERNEL_VERSION(4, 17, 0)
+ 	ret = ttm_bo_init(&vbox->ttm.bdev, &vboxbo->bo, size,
+ 			  ttm_bo_type_device, &vboxbo->placement,
+ 			  align >> PAGE_SHIFT, false, NULL, acc_size,
++#else
++                          align >> PAGE_SHIFT, false, acc_size,
++#endif
+ #if LINUX_VERSION_CODE >= KERNEL_VERSION(3, 18, 0) || defined(RHEL_73)
+ 			  NULL,
+ #endif
