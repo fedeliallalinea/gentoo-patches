@@ -1,0 +1,12 @@
+diff -Naru qtbase-everywhere-src-5.11.1.orig/src/widgets/widgets.pro qtbase-everywhere-src-5.11.1/src/widgets/widgets.pro
+--- qtbase-everywhere-src-5.11.1.orig/src/widgets/widgets.pro	2018-07-20 13:53:39.809888130 +0200
++++ qtbase-everywhere-src-5.11.1/src/widgets/widgets.pro	2018-07-20 13:55:08.419887680 +0200
+@@ -3,7 +3,7 @@
+ MODULE_CONFIG = uic
+ 
+ CONFIG += $$MODULE_CONFIG
+-DEFINES   += QT_NO_USING_NAMESPACE
++DEFINES   += QT_NO_USING_NAMESPACE QT_NO_VERSION_TAGGING
+ msvc:equals(QT_ARCH, i386): QMAKE_LFLAGS += /BASE:0x65000000
+ 
+ QMAKE_DOCS = $$PWD/doc/qtwidgets.qdocconf
