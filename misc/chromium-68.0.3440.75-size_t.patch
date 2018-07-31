@@ -1,0 +1,11 @@
+diff -Naru chromium-68.0.3440.75.orig/media/base/subsample_entry.h chromium-68.0.3440.75/media/base/subsample_entry.h
+--- chromium-68.0.3440.75.orig/media/base/subsample_entry.h	2018-07-31 10:40:24.110023856 +0200
++++ chromium-68.0.3440.75/media/base/subsample_entry.h	2018-07-31 10:41:05.020023944 +0200
+@@ -6,6 +6,7 @@
+ #define MEDIA_BASE_SUBSAMPLE_ENTRY_H_
+ 
+ #include <stdint.h>
++#include <stddef.h>
+ 
+ #include <vector>
+ 
