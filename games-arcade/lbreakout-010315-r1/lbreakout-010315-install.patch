@@ -1,0 +1,11 @@
+diff -Naru lbreakout-010315.orig/lbreakout/Makefile.in lbreakout-010315/lbreakout/Makefile.in
+--- lbreakout-010315.orig/lbreakout/Makefile.in	2018-08-14 14:14:45.477828663 +0200
++++ lbreakout-010315/lbreakout/Makefile.in	2018-08-14 14:15:22.508826614 +0200
+@@ -353,6 +353,7 @@
+ 	$(INSTALL_DATA) wontgiveup.wav $(DESTDIR)$(sdir)/wontgiveup.wav 
+ 	$(INSTALL_DATA) speedup.wav $(DESTDIR)$(sdir)/speedup.wav 
+ 	$(INSTALL_DATA) speeddown.wav $(DESTDIR)$(sdir)/speeddown.wav
++	$(mkinstalldirs) $(DESTDIR)$(hdir)
+ 	$(INSTALL_DATA) -m 666 lbreakout.hscr $(DESTDIR)$(hdir)/lbreakout.hscr
+ 
+ uninstall-local:
