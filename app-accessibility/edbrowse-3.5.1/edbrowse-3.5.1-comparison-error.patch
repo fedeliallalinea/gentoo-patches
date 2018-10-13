@@ -1,0 +1,17 @@
+diff -Naru edbrowse-3.5.1.orig/src/jsloc.cpp edbrowse-3.5.1/src/jsloc.cpp
+--- edbrowse-3.5.1.orig/src/jsloc.cpp	2018-10-13 16:01:10.322938861 +0200
++++ edbrowse-3.5.1/src/jsloc.cpp	2018-10-13 16:03:51.692929935 +0200
+@@ -892,11 +892,11 @@
+ 			cw->jss->jdloc = uo;
+ 
+ 		if ((JS_DefineFunction(cw->jss->jcx, uo, "reload",
+-				       loc_reload, 0, PROP_FIXED) == JS_FALSE)
++				       loc_reload, 0, PROP_FIXED) == NULL)
+ 		    ||
+ 		    (JS_DefineFunction
+ 		     (cw->jss->jcx, uo, "replace", loc_replace, 1,
+-		      PROP_FIXED) == JS_FALSE))
++		      PROP_FIXED) == NULL))
+ 			goto abort;
+ 	}			/* location object */
+ }				/* establish_property_url */
