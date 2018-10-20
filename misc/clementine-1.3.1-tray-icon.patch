@@ -1,0 +1,12 @@
+diff -Naru Clementine-bd096dcbc3cfa8965ee96245b95c4027278b42a6.orig/src/ui/qtsystemtrayicon.cpp Clementine-bd096dcbc3cfa8965ee96245b95c4027278b42a6/src/ui/qtsystemtrayicon.cpp
+--- Clementine-bd096dcbc3cfa8965ee96245b95c4027278b42a6.orig/src/ui/qtsystemtrayicon.cpp	2018-10-20 21:30:05.628570674 +0200
++++ Clementine-bd096dcbc3cfa8965ee96245b95c4027278b42a6/src/ui/qtsystemtrayicon.cpp	2018-10-20 21:30:50.025568218 +0200
+@@ -160,7 +160,7 @@
+ 
+ void QtSystemTrayIcon::ShowPopup(const QString& summary, const QString& message,
+                                  int timeout) {
+-  tray_->showMessage(summary, message, QSystemTrayIcon::NoIcon, timeout);
++  //tray_->showMessage(summary, message, QSystemTrayIcon::NoIcon, timeout);
+ }
+ 
+ void QtSystemTrayIcon::UpdateIcon() {
