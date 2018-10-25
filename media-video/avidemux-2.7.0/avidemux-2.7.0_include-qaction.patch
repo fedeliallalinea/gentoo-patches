@@ -1,0 +1,12 @@
+diff -Naru avidemux_2.7.0.orig/avidemux/qt4/ADM_jobs/src/ADM_jobControl.cpp avidemux_2.7.0/avidemux/qt4/ADM_jobs/src/ADM_jobControl.cpp
+--- avidemux_2.7.0.orig/avidemux/qt4/ADM_jobs/src/ADM_jobControl.cpp	2018-10-25 12:17:27.539381861 +0200
++++ avidemux_2.7.0/avidemux/qt4/ADM_jobs/src/ADM_jobControl.cpp	2018-10-25 12:17:44.499381702 +0200
+@@ -17,7 +17,7 @@
+ #include "ADM_coreJobs.h"
+ #include "DIA_coreToolkit.h"
+ #include <QtCore/QDir>
+-
++#include <QAction>
+ 
+ static QTableWidgetItem *fromText(const string &t,int id)
+ {
