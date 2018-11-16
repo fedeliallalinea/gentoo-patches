@@ -1,0 +1,335 @@
+diff -Naru sleepyhead-code-1.0.0-beta-2-6b1c125218475720e1bf7c920ed3d10140b0b7c2.orig/sleepyhead/profileselect.cpp sleepyhead-code-1.0.0-beta-2-6b1c125218475720e1bf7c920ed3d10140b0b7c2/sleepyhead/profileselect.cpp
+--- sleepyhead-code-1.0.0-beta-2-6b1c125218475720e1bf7c920ed3d10140b0b7c2.orig/sleepyhead/profileselect.cpp	2018-11-16 07:40:53.640619103 +0100
++++ sleepyhead-code-1.0.0-beta-2-6b1c125218475720e1bf7c920ed3d10140b0b7c2/sleepyhead/profileselect.cpp	2018-11-16 07:41:00.350619040 +0100
+@@ -205,7 +205,7 @@
+     if (confirmdlg.exec() != QDialog::Accepted)
+         return;
+ 
+-    if (lineedit.text().compare("DELETE")!=0) {
++    if (lineedit.text().compare(QLatin1String("DELETE"))!=0) {
+         QMessageBox::information(NULL, tr("Sorry"), tr("You need to enter DELETE in capital letters."), QMessageBox::Ok);
+         return;
+     }
+diff -Naru sleepyhead-code-1.0.0-beta-2-6b1c125218475720e1bf7c920ed3d10140b0b7c2.orig/sleepyhead/SleepLib/loader_plugins/cms50f37_loader.cpp sleepyhead-code-1.0.0-beta-2-6b1c125218475720e1bf7c920ed3d10140b0b7c2/sleepyhead/SleepLib/loader_plugins/cms50f37_loader.cpp
+--- sleepyhead-code-1.0.0-beta-2-6b1c125218475720e1bf7c920ed3d10140b0b7c2.orig/sleepyhead/SleepLib/loader_plugins/cms50f37_loader.cpp	2018-11-16 07:40:53.640619103 +0100
++++ sleepyhead-code-1.0.0-beta-2-6b1c125218475720e1bf7c920ed3d10140b0b7c2/sleepyhead/SleepLib/loader_plugins/cms50f37_loader.cpp	2018-11-16 07:41:00.350619040 +0100
+@@ -138,7 +138,7 @@
+ 
+     // Cheating using path for two serial oximetry modes
+ 
+-    if (path.compare("import") == 0) {
++    if (path.compare(QLatin1String("import")) == 0) {
+         serial.clear();
+ 
+         sequence = 0;
+@@ -148,11 +148,11 @@
+         setStatus(IMPORTING);
+ 
+         return 1;
+-    } else if (path.compare("live") == 0) {
++    } else if (path.compare(QLatin1String("live")) == 0) {
+         return 0;
+     }
+     QString ext = path.section(".",1);
+-    if ((ext.compare("spo2", Qt::CaseInsensitive)==0) || (ext.compare("spo", Qt::CaseInsensitive)==0) || (ext.compare("spor", Qt::CaseInsensitive)==0)) {
++    if ((ext.compare(QLatin1String("spo2"), Qt::CaseInsensitive)==0) || (ext.compare(QLatin1String("spo"), Qt::CaseInsensitive)==0) || (ext.compare(QLatin1String("spor"), Qt::CaseInsensitive)==0)) {
+         // try to read and process SpoR file..
+         return readSpoRFile(path) ? 1 : 0;
+     }
+@@ -829,7 +829,7 @@
+ 
+     bool spo2header = false;
+     QString ext = path.section('.', -1);
+-    if (ext.compare("spo2",Qt::CaseInsensitive) == 0) {
++    if (ext.compare(QLatin1String("spo2"),Qt::CaseInsensitive) == 0) {
+         spo2header = true;
+     }
+ 
+diff -Naru sleepyhead-code-1.0.0-beta-2-6b1c125218475720e1bf7c920ed3d10140b0b7c2.orig/sleepyhead/SleepLib/loader_plugins/cms50_loader.cpp sleepyhead-code-1.0.0-beta-2-6b1c125218475720e1bf7c920ed3d10140b0b7c2/sleepyhead/SleepLib/loader_plugins/cms50_loader.cpp
+--- sleepyhead-code-1.0.0-beta-2-6b1c125218475720e1bf7c920ed3d10140b0b7c2.orig/sleepyhead/SleepLib/loader_plugins/cms50_loader.cpp	2018-11-16 07:40:53.640619103 +0100
++++ sleepyhead-code-1.0.0-beta-2-6b1c125218475720e1bf7c920ed3d10140b0b7c2/sleepyhead/SleepLib/loader_plugins/cms50_loader.cpp	2018-11-16 07:41:00.350619040 +0100
+@@ -91,7 +91,7 @@
+ 
+     // Cheating using path for two serial oximetry modes
+ 
+-    if (path.compare("import") == 0) {
++    if (path.compare(QLatin1String("import")) == 0) {
+         for (int i=0; i<5; ++i) {
+             resetDevice();
+             serial.flush();
+@@ -105,7 +105,7 @@
+         startTimer.stop();
+         startImportTimeout();
+         return 1;
+-    } else if (path.compare("live") == 0) {
++    } else if (path.compare(QLatin1String("live")) == 0) {
+         for (int i=0; i<5; ++i) {
+             resetDevice();
+             serial.flush();
+@@ -122,7 +122,7 @@
+         return 1;
+     }
+     QString ext = path.section(".",1);
+-    if ((ext.compare("spo2", Qt::CaseInsensitive)==0) || (ext.compare("spo", Qt::CaseInsensitive)==0) || (ext.compare("spor", Qt::CaseInsensitive)==0)) {
++    if ((ext.compare(QLatin1String("spo2"), Qt::CaseInsensitive)==0) || (ext.compare(QLatin1String("spo"), Qt::CaseInsensitive)==0) || (ext.compare(QLatin1String("spor"), Qt::CaseInsensitive)==0)) {
+         // try to read and process SpoR file..
+         return readSpoRFile(path) ? 1 : 0;
+     }
+@@ -545,7 +545,7 @@
+ 
+     bool spo2header = false;
+     QString ext = path.section('.', -1);
+-    if (ext.compare("spo2",Qt::CaseInsensitive) == 0) {
++    if (ext.compare(QLatin1String("spo2"),Qt::CaseInsensitive) == 0) {
+         spo2header = true;
+     }
+ 
+diff -Naru sleepyhead-code-1.0.0-beta-2-6b1c125218475720e1bf7c920ed3d10140b0b7c2.orig/sleepyhead/SleepLib/loader_plugins/md300w1_loader.cpp sleepyhead-code-1.0.0-beta-2-6b1c125218475720e1bf7c920ed3d10140b0b7c2/sleepyhead/SleepLib/loader_plugins/md300w1_loader.cpp
+--- sleepyhead-code-1.0.0-beta-2-6b1c125218475720e1bf7c920ed3d10140b0b7c2.orig/sleepyhead/SleepLib/loader_plugins/md300w1_loader.cpp	2018-11-16 07:40:53.640619103 +0100
++++ sleepyhead-code-1.0.0-beta-2-6b1c125218475720e1bf7c920ed3d10140b0b7c2/sleepyhead/SleepLib/loader_plugins/md300w1_loader.cpp	2018-11-16 07:41:00.350619040 +0100
+@@ -82,19 +82,19 @@
+ 
+     // Cheating using path for two serial oximetry modes
+ 
+-    if (path.compare("import") == 0) {
++    if (path.compare(QLatin1String("import")) == 0) {
+         setStatus(IMPORTING);
+ 
+         startTimer.stop();
+         startImportTimeout();
+         return 1;
+-    } else if (path.compare("live") == 0) {
++    } else if (path.compare(QLatin1String("live")) == 0) {
+         m_startTime = oxitime = QDateTime::currentDateTime();
+         setStatus(LIVE);
+         return 1;
+     }
+     QString ext = path.section(".",1);
+-    if (ext.compare("dat", Qt::CaseInsensitive)==0) {
++    if (ext.compare(QLatin1String("dat"), Qt::CaseInsensitive)==0) {
+         // try to read and process SpoR file..
+         return readDATFile(path) ? 1 : 0;
+     }
+diff -Naru sleepyhead-code-1.0.0-beta-2-6b1c125218475720e1bf7c920ed3d10140b0b7c2.orig/sleepyhead/SleepLib/loader_plugins/prs1_loader.cpp sleepyhead-code-1.0.0-beta-2-6b1c125218475720e1bf7c920ed3d10140b0b7c2/sleepyhead/SleepLib/loader_plugins/prs1_loader.cpp
+--- sleepyhead-code-1.0.0-beta-2-6b1c125218475720e1bf7c920ed3d10140b0b7c2.orig/sleepyhead/SleepLib/loader_plugins/prs1_loader.cpp	2018-11-16 07:40:53.640619103 +0100
++++ sleepyhead-code-1.0.0-beta-2-6b1c125218475720e1bf7c920ed3d10140b0b7c2/sleepyhead/SleepLib/loader_plugins/prs1_loader.cpp	2018-11-16 07:41:00.350619040 +0100
+@@ -530,9 +530,9 @@
+                 // Error files..
+                 // Reminder: I have been given some info about these. should check it over.
+             }
+-        } else if (filename.compare("properties.txt",Qt::CaseInsensitive) == 0) {
++        } else if (filename.compare(QLatin1String("properties.txt"),Qt::CaseInsensitive) == 0) {
+             propertyfile = fi.canonicalFilePath();
+-        } else if (filename.compare("PROP.TXT",Qt::CaseInsensitive) == 0) {
++        } else if (filename.compare(QLatin1String("PROP.TXT"),Qt::CaseInsensitive) == 0) {
+             sessionid_base = 16;
+             propertyfile = fi.canonicalFilePath();
+         }
+diff -Naru sleepyhead-code-1.0.0-beta-2-6b1c125218475720e1bf7c920ed3d10140b0b7c2.orig/sleepyhead/SleepLib/loader_plugins/somnopose_loader.cpp sleepyhead-code-1.0.0-beta-2-6b1c125218475720e1bf7c920ed3d10140b0b7c2/sleepyhead/SleepLib/loader_plugins/somnopose_loader.cpp
+--- sleepyhead-code-1.0.0-beta-2-6b1c125218475720e1bf7c920ed3d10140b0b7c2.orig/sleepyhead/SleepLib/loader_plugins/somnopose_loader.cpp	2018-11-16 07:40:53.640619103 +0100
++++ sleepyhead-code-1.0.0-beta-2-6b1c125218475720e1bf7c920ed3d10140b0b7c2/sleepyhead/SleepLib/loader_plugins/somnopose_loader.cpp	2018-11-16 07:41:00.350619040 +0100
+@@ -77,15 +77,15 @@
+     int hdr_size = headers.size();
+ 
+     for (int i = 0; i < hdr_size; i++) {
+-        if (headers.at(i).compare("timestamp", Qt::CaseInsensitive) == 0) {
++        if (headers.at(i).compare(QLatin1String("timestamp"), Qt::CaseInsensitive) == 0) {
+             col_timestamp = i;
+         }
+ 
+-        if (headers.at(i).compare("inclination", Qt::CaseInsensitive) == 0) {
++        if (headers.at(i).compare(QLatin1String("inclination"), Qt::CaseInsensitive) == 0) {
+             col_inclination = i;
+         }
+ 
+-        if (headers.at(i).compare("orientation", Qt::CaseInsensitive) == 0) {
++        if (headers.at(i).compare(QLatin1String("orientation"), Qt::CaseInsensitive) == 0) {
+             col_orientation = i;
+         }
+     }
+diff -Naru sleepyhead-code-1.0.0-beta-2-6b1c125218475720e1bf7c920ed3d10140b0b7c2.orig/sleepyhead/SleepLib/machine.cpp sleepyhead-code-1.0.0-beta-2-6b1c125218475720e1bf7c920ed3d10140b0b7c2/sleepyhead/SleepLib/machine.cpp
+--- sleepyhead-code-1.0.0-beta-2-6b1c125218475720e1bf7c920ed3d10140b0b7c2.orig/sleepyhead/SleepLib/machine.cpp	2018-11-16 07:40:53.640619103 +0100
++++ sleepyhead-code-1.0.0-beta-2-6b1c125218475720e1bf7c920ed3d10140b0b7c2/sleepyhead/SleepLib/machine.cpp	2018-11-16 07:41:00.350619040 +0100
+@@ -900,7 +900,7 @@
+ 
+     QDomElement root = doc.documentElement();
+ 
+-    if (root.tagName().compare("sessions", Qt::CaseInsensitive) != 0) {
++    if (root.tagName().compare(QLatin1String("sessions"), Qt::CaseInsensitive) != 0) {
+         qDebug() << "Summaries cache messed up, recreating...";
+         return false;
+     }
+diff -Naru sleepyhead-code-1.0.0-beta-2-6b1c125218475720e1bf7c920ed3d10140b0b7c2.orig/sleepyhead/statistics.h sleepyhead-code-1.0.0-beta-2-6b1c125218475720e1bf7c920ed3d10140b0b7c2/sleepyhead/statistics.h
+--- sleepyhead-code-1.0.0-beta-2-6b1c125218475720e1bf7c920ed3d10140b0b7c2.orig/sleepyhead/statistics.h	2018-11-16 07:40:53.640619103 +0100
++++ sleepyhead-code-1.0.0-beta-2-6b1c125218475720e1bf7c920ed3d10140b0b7c2/sleepyhead/statistics.h	2018-11-16 07:41:00.350619040 +0100
+@@ -42,33 +42,33 @@
+ 
+     StatCalcType lookupCalc(QString calc)
+     {
+-        if (calc.compare("avg",Qt::CaseInsensitive)==0) {
++        if (calc.compare(QLatin1String("avg"),Qt::CaseInsensitive)==0) {
+             return SC_AVG;
+-        } else if (calc.compare("w-avg",Qt::CaseInsensitive)==0) {
++        } else if (calc.compare(QLatin1String("w-avg"),Qt::CaseInsensitive)==0) {
+             return SC_WAVG;
+-        } else if (calc.compare("median",Qt::CaseInsensitive)==0) {
++        } else if (calc.compare(QLatin1String("median"),Qt::CaseInsensitive)==0) {
+             return SC_MEDIAN;
+-        } else if (calc.compare("90%",Qt::CaseInsensitive)==0) {
++        } else if (calc.compare(QLatin1String("90%"),Qt::CaseInsensitive)==0) {
+             return SC_90P;
+-        } else if (calc.compare("min", Qt::CaseInsensitive)==0) {
++        } else if (calc.compare(QLatin1String("min"), Qt::CaseInsensitive)==0) {
+             return SC_MIN;
+-        } else if (calc.compare("max", Qt::CaseInsensitive)==0) {
++        } else if (calc.compare(QLatin1String("max"), Qt::CaseInsensitive)==0) {
+             return SC_MAX;
+-        } else if (calc.compare("cph", Qt::CaseInsensitive)==0) {
++        } else if (calc.compare(QLatin1String("cph"), Qt::CaseInsensitive)==0) {
+             return SC_CPH;
+-        } else if (calc.compare("sph", Qt::CaseInsensitive)==0) {
++        } else if (calc.compare(QLatin1String("sph"), Qt::CaseInsensitive)==0) {
+             return SC_SPH;
+-        } else if (calc.compare("ahi", Qt::CaseInsensitive)==0) {
++        } else if (calc.compare(QLatin1String("ahi"), Qt::CaseInsensitive)==0) {
+             return SC_AHI;
+-        } else if (calc.compare("hours", Qt::CaseInsensitive)==0) {
++        } else if (calc.compare(QLatin1String("hours"), Qt::CaseInsensitive)==0) {
+             return SC_HOURS;
+-        } else if (calc.compare("compliance", Qt::CaseInsensitive)==0) {
++        } else if (calc.compare(QLatin1String("compliance"), Qt::CaseInsensitive)==0) {
+             return SC_COMPLIANCE;
+-        } else if (calc.compare("days", Qt::CaseInsensitive)==0) {
++        } else if (calc.compare(QLatin1String("days"), Qt::CaseInsensitive)==0) {
+             return SC_DAYS;
+-        } else if (calc.compare("heading", Qt::CaseInsensitive)==0) {
++        } else if (calc.compare(QLatin1String("heading"), Qt::CaseInsensitive)==0) {
+             return SC_HEADING;
+-        } else if (calc.compare("subheading", Qt::CaseInsensitive)==0) {
++        } else if (calc.compare(QLatin1String("subheading"), Qt::CaseInsensitive)==0) {
+             return SC_SUBHEADING;
+         }
+         return SC_UNDEFINED;
+@@ -78,9 +78,9 @@
+     {
+         if (type.compare("cpap", Qt::CaseInsensitive)==0) {
+             return MT_CPAP;
+-        } else if (type.compare("oximeter", Qt::CaseInsensitive)==0) {
++        } else if (type.compare(QLatin1String("oximeter"), Qt::CaseInsensitive)==0) {
+             return MT_OXIMETER;
+-        } else if (type.compare("sleepstage", Qt::CaseInsensitive)==0) {
++        } else if (type.compare(QLatin1String("sleepstage"), Qt::CaseInsensitive)==0) {
+             return MT_SLEEPSTAGE;
+         }
+         return MT_UNKNOWN;
+diff -Naru sleepyhead-code-1.0.0-beta-2-6b1c125218475720e1bf7c920ed3d10140b0b7c2.orig/sleepyhead/updateparser.cpp sleepyhead-code-1.0.0-beta-2-6b1c125218475720e1bf7c920ed3d10140b0b7c2/sleepyhead/updateparser.cpp
+--- sleepyhead-code-1.0.0-beta-2-6b1c125218475720e1bf7c920ed3d10140b0b7c2.orig/sleepyhead/updateparser.cpp	2018-11-16 07:40:53.640619103 +0100
++++ sleepyhead-code-1.0.0-beta-2-6b1c125218475720e1bf7c920ed3d10140b0b7c2/sleepyhead/updateparser.cpp	2018-11-16 07:41:34.230618723 +0100
+@@ -250,7 +250,7 @@
+     Q_ASSERT(xml.isStartElement() && xml.name() == "Updates");
+ 
+     while (xml.readNextStartElement()) {
+-        if (xml.name().compare("PackageUpdate",Qt::CaseInsensitive)==0) {
++        if (xml.name().compare(QLatin1String("PackageUpdate"),Qt::CaseInsensitive)==0) {
+             readPackageUpdate();
+         } else {
+             qDebug() << "Skipping Updates.xml tag" << xml.name();
+@@ -262,52 +262,52 @@
+ 
+ void UpdatesParser::readPackageUpdate()
+ {
+-    Q_ASSERT(xml.isStartElement() && (xml.name().compare("PackageUpdate",Qt::CaseInsensitive)==0));
++    Q_ASSERT(xml.isStartElement() && (xml.name().compare(QLatin1String("PackageUpdate"),Qt::CaseInsensitive)==0));
+     package = PackageUpdate();
+ 
+     while (xml.readNextStartElement()) {
+-        if (xml.name().compare("Name",Qt::CaseInsensitive)==0) {
++        if (xml.name().compare(QLatin1String("Name"),Qt::CaseInsensitive)==0) {
+             package.name = xml.readElementText().toLower();
+-        } else if (xml.name().compare("DisplayName",Qt::CaseInsensitive)==0) {
++        } else if (xml.name().compare(QLatin1String("DisplayName"),Qt::CaseInsensitive)==0) {
+             package.displayName = xml.readElementText();
+-        } else if (xml.name().compare("Description",Qt::CaseInsensitive)==0) {
++        } else if (xml.name().compare(QLatin1String("Description"),Qt::CaseInsensitive)==0) {
+             package.description = xml.readElementText();
+-        } else if (xml.name().compare("Version",Qt::CaseInsensitive)==0) {
++        } else if (xml.name().compare(QLatin1String("Version"),Qt::CaseInsensitive)==0) {
+             package.versionString = xml.readElementText();
+-        } else if (xml.name().compare("ReleaseDate",Qt::CaseInsensitive)==0) {
++        } else if (xml.name().compare(QLatin1String("ReleaseDate"),Qt::CaseInsensitive)==0) {
+             package.releaseDate = QDate().fromString(xml.readElementText(), "yyyy-MM-dd");
+-        } else if (xml.name().compare("Default",Qt::CaseInsensitive)==0) {
++        } else if (xml.name().compare(QLatin1String("Default"),Qt::CaseInsensitive)==0) {
+             package.defaultInstall = xml.readElementText().compare("true") == 0;
+-        } else if (xml.name().compare("ForcedInstallation",Qt::CaseInsensitive)==0) {
++        } else if (xml.name().compare(QLatin1String("ForcedInstallation"),Qt::CaseInsensitive)==0) {
+             package.forcedInstall = xml.readElementText().compare("true") == 0;
+-        } else if (xml.name().compare("Script",Qt::CaseInsensitive)==0) {
++        } else if (xml.name().compare(QLatin1String("Script"),Qt::CaseInsensitive)==0) {
+             package.script = xml.readElementText();
+-        } else if (xml.name().compare("Dependencies",Qt::CaseInsensitive)==0) {
++        } else if (xml.name().compare(QLatin1String("Dependencies"),Qt::CaseInsensitive)==0) {
+             package.dependencies = xml.readElementText().split(",");
+-        } else if (xml.name().compare("UpdateFile",Qt::CaseInsensitive)==0) {
++        } else if (xml.name().compare(QLatin1String("UpdateFile"),Qt::CaseInsensitive)==0) {
+             for (int i=0; i<xml.attributes().size(); ++i) {
+                 const QXmlStreamAttribute & at = xml.attributes().at(i);
+-                if (at.name().compare("CompressedSize", Qt::CaseInsensitive)==0) {
++                if (at.name().compare(QLatin1String("CompressedSize"), Qt::CaseInsensitive)==0) {
+                     package.compressedSize = at.value().toLong();
+-                } else if (at.name().compare("UncompressedSize",Qt::CaseInsensitive)==0) {
++                } else if (at.name().compare(QLatin1String("UncompressedSize"),Qt::CaseInsensitive)==0) {
+                     package.uncompressedSize = at.value().toLong();
+-                } else if (at.name().compare("OS",Qt::CaseInsensitive)==0) {
++                } else if (at.name().compare(QLatin1String("OS"),Qt::CaseInsensitive)==0) {
+                     package.os = at.value().toString();
+                 }
+             }
+             xml.skipCurrentElement();
+-        } else if (xml.name().compare("DownloadableArchives")==0) {
++        } else if (xml.name().compare(QLatin1String("DownloadableArchives"))==0) {
+             package.downloadArchives = xml.readElementText().split(",");
+-        } else if (xml.name().compare("Licenses",Qt::CaseInsensitive)==0) {
++        } else if (xml.name().compare(QLatin1String("Licenses"),Qt::CaseInsensitive)==0) {
+            while (xml.readNextStartElement()) {
+-                if (xml.name().compare("License",Qt::CaseInsensitive)==0) {
++                if (xml.name().compare(QLatin1String("License"),Qt::CaseInsensitive)==0) {
+                     QString name;
+                     QString file;
+                     for (int i=0; i<xml.attributes().size(); ++i) {
+                         const QXmlStreamAttribute & at = xml.attributes().at(i);
+-                        if (at.name().compare("name", Qt::CaseInsensitive)==0) {
++                        if (at.name().compare(QLatin1String("name"), Qt::CaseInsensitive)==0) {
+                             name = at.value().toString();
+-                        } else if (at.name().compare("file",Qt::CaseInsensitive)==0) {
++                        } else if (at.name().compare(QLatin1String("file"),Qt::CaseInsensitive)==0) {
+                             file = at.value().toString();
+                         }
+                     }
+@@ -319,7 +319,7 @@
+                      xml.skipCurrentElement();
+                 }
+             }
+-        } else if (xml.name().compare("SHA1",Qt::CaseInsensitive)==0) {
++        } else if (xml.name().compare(QLatin1String("SHA1"),Qt::CaseInsensitive)==0) {
+             package.sha1 = xml.readElementText();
+         } else {
+             qDebug() << "UP Skipping Updates.xml tag" << xml.name();
+diff -Naru sleepyhead-code-1.0.0-beta-2-6b1c125218475720e1bf7c920ed3d10140b0b7c2.orig/sleepyhead/UpdaterWindow.cpp sleepyhead-code-1.0.0-beta-2-6b1c125218475720e1bf7c920ed3d10140b0b7c2/sleepyhead/UpdaterWindow.cpp
+--- sleepyhead-code-1.0.0-beta-2-6b1c125218475720e1bf7c920ed3d10140b0b7c2.orig/sleepyhead/UpdaterWindow.cpp	2018-11-16 07:40:53.640619103 +0100
++++ sleepyhead-code-1.0.0-beta-2-6b1c125218475720e1bf7c920ed3d10140b0b7c2/sleepyhead/UpdaterWindow.cpp	2018-11-16 07:41:00.350619040 +0100
+@@ -279,10 +279,10 @@
+         return v;
+     }
+ 
+-    if (statusstr.compare("testing", Qt::CaseInsensitive) == 0) return 0;
+-    else if (statusstr.compare("beta", Qt::CaseInsensitive) == 0) return 1;
+-    else if (statusstr.compare("rc", Qt::CaseInsensitive) == 0) return 2;
+-    else if (statusstr.compare("r", Qt::CaseInsensitive) == 0) return 3;
++    if (statusstr.compare(QLatin1String("testing"), Qt::CaseInsensitive) == 0) return 0;
++    else if (statusstr.compare(QLatin1String("beta"), Qt::CaseInsensitive) == 0) return 1;
++    else if (statusstr.compare(QLatin1String("rc"), Qt::CaseInsensitive) == 0) return 2;
++    else if (statusstr.compare(QLatin1String("r"), Qt::CaseInsensitive) == 0) return 3;
+ 
+     return 0;
+ }
