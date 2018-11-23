@@ -1,0 +1,14 @@
+diff -Naru udiskie-1.1.1.orig/udiskie/mount.py udiskie-1.1.1/udiskie/mount.py
+--- udiskie-1.1.1.orig/udiskie/mount.py	2018-11-23 09:15:00.759997371 +0100
++++ udiskie-1.1.1/udiskie/mount.py	2018-11-23 09:15:53.599997349 +0100
+@@ -122,9 +122,8 @@
+         if device.is_mounted:
+             self._log.info(_('not mounting {0}: already mounted', device))
+             return True
+-        fstype = str(device.id_type)
+         options = self._mount_options(device)
+-        kwargs = dict(fstype=fstype, options=options)
++        kwargs = dict(options=options)
+         self._log.debug(_('mounting {0} with {1}', device, kwargs))
+         mount_path = device.mount(**kwargs)
+         self._log.info(_('mounted {0} on {1}', device, mount_path))
