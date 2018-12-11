@@ -1,0 +1,12 @@
+diff -Naru a/all/rjb-1.5.5/ext/load.c b/all/rjb-1.5.5/ext/load.c
+--- a/all/rjb-1.5.5/ext/load.c	2018-12-11 07:52:52.799999478 +0100
++++ b/all/rjb-1.5.5/ext/load.c	2018-12-11 08:01:41.579999249 +0100
+@@ -79,6 +79,8 @@
+   #define ARCH "i386"
+  #elif defined(__arm__)
+   #define ARCH "arm"
++ #elif defined(__aarch64__)
++  #define ARCH "aarch64"
+  #endif
+  #ifndef ARCH
+   #include <sys/systeminfo.h>
