@@ -1,0 +1,28 @@
+From 85f9f6875e1ea4413bb47084c31b9e3a6ba446c2 Mon Sep 17 00:00:00 2001
+From: Luigi Ballabio <luigi.ballabio@gmail.com>
+Date: Sat, 26 Aug 2017 18:18:08 +0200
+Subject: [PATCH] Avoid name clash with Boost 1.65.0 and g++ 6.3.
+
+An Integer type was pulled in from both the QuantLib and the
+boost namespace.  The reason why this doesn't happen with
+earlier versions of g++, or with g++ 6.3 in C++03 mode,
+escapes me.
+---
+ test-suite/cashflows.cpp | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/test-suite/cashflows.cpp b/test-suite/cashflows.cpp
+index d5f1dfff6a..ef8bd164fd 100644
+--- a/test-suite/cashflows.cpp
++++ b/test-suite/cashflows.cpp
+@@ -33,8 +33,9 @@
+ #include <ql/settings.hpp>
+ 
+ using namespace QuantLib;
+-using namespace boost;
+ using namespace boost::unit_test_framework;
++using boost::shared_ptr;
++using boost::none;
+ 
+ void CashFlowsTest::testSettings() {
+ 
