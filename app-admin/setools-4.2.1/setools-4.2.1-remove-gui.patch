@@ -1,0 +1,17 @@
+diff -Naru setools-4.2.1.orig/setup.py setools-4.2.1/setup.py
+--- setools-4.2.1.orig/setup.py	2019-02-11 09:36:11.560018406 +0100
++++ setools-4.2.1/setup.py	2019-02-11 09:36:59.030018526 +0100
+@@ -134,10 +134,10 @@
+       author_email='pebenito@ieee.org',
+       url='https://github.com/SELinuxProject/setools',
+       cmdclass={'build_qhc': QtHelpCommand, 'clean': CleanCommand},
+-      packages=['setools', 'setools.diff', 'setoolsgui', 'setoolsgui.apol'],
+-      scripts=['apol', 'sediff', 'seinfo', 'seinfoflow', 'sesearch', 'sedta'],
++      packages=['setools', 'setools.diff'],
++      scripts=['sediff', 'seinfo', 'seinfoflow', 'sesearch', 'sedta'],
+       data_files=[('share/man/man1', glob.glob("man/*.1"))],
+-      package_data={'': ['*.ui', '*.qhc', '*.qch'], 'setools': ['perm_map']},
++      package_data={'setools': ['perm_map']},
+       ext_modules=cythonize(ext_py_mods, include_path=['setools/policyrep'],
+                             annotate=cython_annotate,
+                             compiler_directives={"language_level": 3,
