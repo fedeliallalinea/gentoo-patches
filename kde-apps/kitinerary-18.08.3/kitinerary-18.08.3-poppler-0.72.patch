@@ -1,15 +1,6 @@
 diff -Naru kitinerary-18.08.3.orig/CMakeLists.txt kitinerary-18.08.3/CMakeLists.txt
---- kitinerary-18.08.3.orig/CMakeLists.txt	2019-02-22 19:02:55.472831877 +0100
-+++ kitinerary-18.08.3/CMakeLists.txt	2019-02-22 19:03:04.527831376 +0100
-@@ -20,7 +20,7 @@
-     PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/KPimItineraryConfigVersion.cmake"
- )
- 
--find_package(Qt5 REQUIRED COMPONENTS Test Gui Qml)
-+find_package(Qt5 REQUIRED COMPONENTS  Gui Qml)
- find_package(KF5 REQUIRED COMPONENTS I18n)
- find_package(KF5Mime CONFIG REQUIRED)
- find_package(KF5CalendarCore CONFIG)
+--- kitinerary-18.08.3.orig/CMakeLists.txt	2019-02-22 19:07:41.890816034 +0100
++++ kitinerary-18.08.3/CMakeLists.txt	2019-02-22 19:08:59.997811714 +0100
 @@ -42,6 +42,9 @@
      if (${Poppler_VERSION} VERSION_GREATER 0.57)
          set(HAVE_POPPLER_0_58 ON)
@@ -25,7 +16,7 @@ diff -Naru kitinerary-18.08.3.orig/CMakeLists.txt kitinerary-18.08.3/CMakeLists.
  add_subdirectory(src)
  if(BUILD_TESTING)
 -   add_subdirectory(autotests)
-+#DONOTCOMPILE #DONOTCOMPILE    add_subdirectory(autotests)
++    add_subdirectory(autotests)
  endif()
  feature_summary(WHAT ALL INCLUDE_QUIET_PACKAGES FATAL_ON_MISSING_REQUIRED_PACKAGES)
  
@@ -45,8 +36,8 @@ diff -Naru kitinerary-18.08.3.orig/CMakeLists.txt kitinerary-18.08.3/CMakeLists.
 +Module          ${CMAKE_MODULE_LINKER_FLAGS}
 +Shared          ${CMAKE_SHARED_LINKER_FLAGS}\n")
 diff -Naru kitinerary-18.08.3.orig/src/config-kitinerary.h.cmake kitinerary-18.08.3/src/config-kitinerary.h.cmake
---- kitinerary-18.08.3.orig/src/config-kitinerary.h.cmake	2019-02-22 19:02:55.479831876 +0100
-+++ kitinerary-18.08.3/src/config-kitinerary.h.cmake	2019-02-22 19:03:27.515830104 +0100
+--- kitinerary-18.08.3.orig/src/config-kitinerary.h.cmake	2019-02-22 19:07:41.897816034 +0100
++++ kitinerary-18.08.3/src/config-kitinerary.h.cmake	2019-02-22 19:08:08.908814540 +0100
 @@ -22,6 +22,7 @@
  
  #cmakedefine HAVE_POPPLER
@@ -56,8 +47,8 @@ diff -Naru kitinerary-18.08.3.orig/src/config-kitinerary.h.cmake kitinerary-18.0
  #cmakedefine HAVE_KCAL
  #cmakedefine HAVE_KCONTACTS
 diff -Naru kitinerary-18.08.3.orig/src/pdfdocument.cpp kitinerary-18.08.3/src/pdfdocument.cpp
---- kitinerary-18.08.3.orig/src/pdfdocument.cpp	2019-02-22 19:02:55.478831876 +0100
-+++ kitinerary-18.08.3/src/pdfdocument.cpp	2019-02-22 19:03:04.488831378 +0100
+--- kitinerary-18.08.3.orig/src/pdfdocument.cpp	2019-02-22 19:07:41.896816034 +0100
++++ kitinerary-18.08.3/src/pdfdocument.cpp	2019-02-22 19:08:08.908814540 +0100
 @@ -306,7 +306,12 @@
      const auto pageRect = d->m_doc->m_popplerDoc->getPage(d->m_pageNum + 1)->getCropBox();
      std::unique_ptr<GooString> s(device->getText(ratio(pageRect->x1, pageRect->x2, left), ratio(pageRect->y1, pageRect->y2, top),
