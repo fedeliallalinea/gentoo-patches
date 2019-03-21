@@ -92,6 +92,36 @@ index 0eb72e4..1c968de 100644
  
      status = RM_OK;
  
+diff --git a/kernel/nv-time.h b/kernel/nv-time.h
+new file mode 100644
+index 0000000..cc828aa
+--- /dev/null
++++ b/kernel/nv-time.h
+@@ -0,0 +1,24 @@
++#ifndef __NV_TIME_H__
++#define __NV_TIME_H__
++
++#include "conftest.h"
++#include <linux/time.h>
++
++#if defined(NV_LINUX_KTIME_H_PRESENT)
++#include <linux/ktime.h>
++#endif
++
++static inline void nv_gettimeofday(struct timeval *tv)
++{
++#ifdef NV_DO_GETTIMEOFDAY_PRESENT
++    do_gettimeofday(tv);
++#else
++    struct timespec64 now;
++
++    ktime_get_real_ts64(&now);
++    tv->tv_sec = now.tv_sec;
++    tv->tv_usec = now.tv_nsec/1000;
++#endif
++}
++
++#endif
 diff --git a/kernel/os-interface.c b/kernel/os-interface.c
 index 7e3d362..ee2a878 100644
 --- a/kernel/os-interface.c
