@@ -1,0 +1,13 @@
+diff --git a/kernel/nvidia/nv-pat.c b/kernel/nvidia/nv-pat.c
+index 4fb16f0..b80f5fd 100644
+--- a/kernel/nvidia/nv-pat.c
++++ b/kernel/nvidia/nv-pat.c
+@@ -142,7 +142,7 @@ nvidia_cpu_teardown(unsigned int cpu)
+     if (this_cpu == cpu)
+         nv_restore_pat_entries(NULL);
+     else
+-        smp_call_function(nv_restore_pat_entries, &cpu, 1)
++        smp_call_function(nv_restore_pat_entries, &cpu, 1);
+ 
+     put_cpu();
+ #endif
