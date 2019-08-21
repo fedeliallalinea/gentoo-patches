@@ -1,0 +1,54 @@
+diff --git a/vdr-plugin.eselect b/vdr-plugin.eselect
+index d76052a..82ef5c0 100644
+--- a/vdr-plugin.eselect
++++ b/vdr-plugin.eselect
+@@ -2,13 +2,15 @@
+ # Distributed under the terms of the GNU General Public License v2
+ # $Id: bashcomp.eselect 367 2007-03-28 14:35:23Z pioto $
+ 
++inherit multilib
++
+ DESCRIPTION="Manage VDR plugins"
+ MAINTAINER="zzam@gentoo.org"
+ SVN_DATE='$Date: 2010-01-22 21:28:20 +0100 (Fr, 22. Jan 2010) $'
+ VERSION=$(svn_date_to_version "${SVN_DATE}")
+ 
+ find_plugins() {
+-	local plugins plugin f plugindir="${ROOT}/usr/lib/vdr/plugins"
++	local plugins plugin f plugindir="${ROOT}/usr/$(lib_dir)/vdr/plugins"
+ 
+ 	for f in ${plugindir}/libvdr-*.so* ; do
+ 		[[ -e ${f} ]] || continue
+@@ -42,7 +44,7 @@ is_enabled() {
+ }
+ 
+ plugin_exists() {
+-	local f plugindir="${ROOT}/usr/lib/vdr/plugins"
++	local f plugindir="${ROOT}/usr/$(lib_dir)/vdr/plugins"
+ 
+ 	for f in ${plugindir}/libvdr-${1}.so.*; do
+ 		[[ -e "${f}" ]] && return 0
+@@ -50,6 +52,23 @@ plugin_exists() {
+ 	return 1
+ }
+ 
++lib_dir() {
++	local lib_list=$(list_libdirs)
++	if [[ ${lib_list} =~ .*lib64.* && \
++			-n $(ls -d ${ROOT}/usr/lib64/vdr/plugins 2> /dev/null) ]] ; then
++			echo "lib64"
++	elif [[ ${lib_list} =~ .*lib32.* && \
++			-n $(ls -d ${ROOT}/usr/lib32/vdr/plugins 2> /dev/null) ]] ; then
++			echo "lib32"
++	elif [[ ${lib_list} =~ .*libx32.* && \
++			-n $(ls -d ${ROOT}/usr/libx32/vdr/plugins 2> /dev/null) ]] ; then
++			echo "libx32"
++	else
++			echo "lib"
++	fi
++}
++
++
+ ### show action ###
+ 
+ describe_show() {
