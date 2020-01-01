@@ -1,0 +1,15 @@
+diff -Naru a/Makefile b/Makefile
+--- a/Makefile	2020-01-01 16:45:09.109610534 +0100
++++ b/Makefile	2020-01-01 16:45:49.796608283 +0100
+@@ -4,8 +4,9 @@
+ 	@echo Run \'make install\' to install kunst on your device
+ 
+ install:
+-	@cp kunst $(DEST)/kunst
+-	@chmod 755 $(DEST)/kunst
++	@mkdir -p $(DESTDIR)/$(DEST)
++	@cp kunst $(DESTDIR)/$(DEST)/kunst
++	@chmod 755 $(DESTDIR)/$(DEST)/kunst
+ 	@echo Kunst has been installed on your device
+ 
+ uninstall:
