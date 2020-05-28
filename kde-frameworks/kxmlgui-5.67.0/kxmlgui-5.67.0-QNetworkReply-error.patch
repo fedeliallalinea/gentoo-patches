@@ -1,0 +1,15 @@
+diff -Naru a/src/kaboutapplicationpersonmodel_p.cpp b/src/kaboutapplicationpersonmodel_p.cpp
+--- a/src/kaboutapplicationpersonmodel_p.cpp	2020-05-28 07:27:57.709265163 +0200
++++ b/src/kaboutapplicationpersonmodel_p.cpp	2020-05-28 07:33:51.119263951 +0200
+@@ -383,11 +383,7 @@
+     KAboutApplicationPersonProfileOcsLink::Type type = m_ocsLinks.at(i).type();
+ 
+ 
+-#if (QT_VERSION < QT_VERSION_CHECK(5, 15, 0))
+     if (reply->error() != QNetworkReply::NoError) {
+-#else
+-    if (reply->networkError() != QNetworkReply::NoError) {
+-#endif
+         //qCDebug(DEBUG_KXMLGUI) << "Could not fetch OCS link icon.";
+         reply->deleteLater();
+         getIcons(i + 1);
