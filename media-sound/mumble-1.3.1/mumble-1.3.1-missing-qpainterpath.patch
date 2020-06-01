@@ -1,0 +1,11 @@
+diff -Naru a/src/mumble/OverlayText.h b/src/mumble/OverlayText.h
+--- a/src/mumble/OverlayText.h	2020-06-01 19:13:52.042989103 +0200
++++ b/src/mumble/OverlayText.h	2020-06-01 19:20:50.066957847 +0200
+@@ -8,6 +8,7 @@
+ 
+ #include <QtGui/QPixmap>
+ #include <QtGui/QFont>
++#include <QPainterPath>
+ 
+ //! Annotated QPixmap supplying a basepoint.
+ class BasepointPixmap : public QPixmap {
