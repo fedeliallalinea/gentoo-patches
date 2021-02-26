@@ -1,0 +1,46 @@
+diff --color -Naru a/drivers/esci/verify.cpp b/drivers/esci/verify.cpp
+--- a/drivers/esci/verify.cpp	2021-02-26 18:46:11.340927936 +0100
++++ b/drivers/esci/verify.cpp	2021-02-26 18:47:41.438929952 +0100
+@@ -58,6 +58,7 @@
+ 
+ using namespace utsushi;
+ using namespace _drv_::esci;
++using namespace boost::placeholders;
+ 
+ using std::basic_string;
+ using std::ios_base;
+diff --color -Naru a/gtkmm/pump.cpp b/gtkmm/pump.cpp
+--- a/gtkmm/pump.cpp	2021-02-26 18:46:11.344927936 +0100
++++ b/gtkmm/pump.cpp	2021-02-26 18:47:21.566929507 +0100
+@@ -31,6 +31,8 @@
+ namespace utsushi {
+ namespace gtkmm {
+ 
++using namespace boost::placeholders;
++
+ pump::pump (idevice::ptr idev)
+   : utsushi::pump (idev)
+   , idev_ptr_(idev)
+diff --color -Naru a/lib/monitor.cpp b/lib/monitor.cpp
+--- a/lib/monitor.cpp	2021-02-26 18:46:11.345927936 +0100
++++ b/lib/monitor.cpp	2021-02-26 18:46:44.906928687 +0100
+@@ -48,6 +48,7 @@
+ 
+ namespace utsushi {
+ 
++using namespace boost::placeholders;
+ using boost::filesystem::exists;
+ 
+ class monitor::impl
+diff --color -Naru a/sane/handle.cpp b/sane/handle.cpp
+--- a/sane/handle.cpp	2021-02-26 18:46:11.347927936 +0100
++++ b/sane/handle.cpp	2021-02-26 18:47:56.758930294 +0100
+@@ -57,6 +57,8 @@
+ #include "log.hpp"
+ #include "value.hpp"
+ 
++using namespace boost::placeholders;
++
+ using std::exception;
+ using std::runtime_error;
+ using utsushi::_flt_::bottom_padder;
